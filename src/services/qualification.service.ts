@@ -14,6 +14,7 @@ import {
 import { buildScenarioReasoningReply } from "./scenario-reasoning.service";
 import { buildNegotiationReply } from "./negotiation-rules.service";
 import { buildBookingClosingReply } from "./booking-closing.service";
+import { buildKnowledgeAnswer } from "./knowledge-answer.service";
 import {
   ensureLead,
   getLeadByContactId,
@@ -295,6 +296,16 @@ export function buildQualifiedReply(contactId: string, incomingText?: string): s
     }
 
     return bookingDecision.reply;
+  }
+
+  const knowledgeDecision = buildKnowledgeAnswer(
+    contactId,
+    incomingText,
+    conversationLanguage
+  );
+
+  if (knowledgeDecision.reply) {
+    return knowledgeDecision.reply;
   }
 
   const handoffDecision = decideHandoff(incomingText, lead);
