@@ -1,0 +1,41 @@
+export type LeadTemperature = "cold" | "warm" | "hot";
+
+export const LEAD_SCORING = {
+  hotSignals: [
+    "today",
+    "tomorrow",
+    "this week",
+    "same day",
+    "can you come",
+    "what time",
+    "schedule",
+    "appointment",
+    "address",
+    "phone number",
+    "card",
+    "cash",
+    "business",
+    "6 cameras",
+    "8 cameras",
+    "yard",
+    "warehouse",
+  ],
+  warmSignals: [
+    "4 cameras",
+    "house",
+    "business",
+    "bakersfield",
+    "price",
+    "installation included",
+    "no monthly",
+    "wireless",
+    "internet",
+  ],
+  coldSignals: [
+    "how much",
+    "precio",
+    "cuanto",
+    "available",
+    "info",
+  ],
+} as const;

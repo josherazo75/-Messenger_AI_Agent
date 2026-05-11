@@ -1,0 +1,41 @@
+{
+  "name": "messenger_ai_agent",
+  "version": "1.0.0",
+  "description": "Messenger AI Agent",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "show:messages": "ts-node-dev --transpile-only src/scripts/show-messages.ts",
+    "show:leads": "ts-node-dev --transpile-only src/scripts/show-leads.ts",
+    "show:followups": "ts-node-dev --transpile-only src/scripts/show-followups.ts",
+    "test:followups": "ts-node-dev --transpile-only src/scripts/test-followup-messages.ts",
+    "process:followups": "ts-node-dev --transpile-only src/scripts/process-due-followups.ts",
+    "test:price-inquiry": "ts-node-dev --transpile-only src/scripts/test-price-inquiry.ts",
+    "test:response-depth": "ts-node-dev --transpile-only src/scripts/test-response-depth.ts",
+    "test:spanish-style": "ts-node-dev --transpile-only src/scripts/test-spanish-style.ts",
+    "test:spanish-normalizer": "ts-node-dev --transpile-only src/scripts/test-spanish-normalizer.ts",
+    "test:sales-strategy": "ts-node-dev --transpile-only src/scripts/test-sales-strategy.ts",
+    "test:fuzzy": "ts-node-dev --transpile-only src/scripts/test-fuzzy-text.ts",
+    "test:closer": "ts-node-dev --transpile-only src/scripts/test-closer.ts",
+    "test:handoff": "ts-node-dev --transpile-only src/scripts/test-handoff.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.7.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
