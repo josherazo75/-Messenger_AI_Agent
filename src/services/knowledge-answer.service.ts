@@ -209,9 +209,16 @@ function shouldAppendQualificationQuestion(
   }
 
   const history = getConversationMessages(contactId);
+  const realMessageCount = history.filter(
+    (msg) => Boolean(msg.message_text && msg.message_text.trim())
+  ).length;
 
-  if (history.length <= 2) {
+  if (realMessageCount <= 1) {
     return true;
+  }
+
+  if (realMessageCount > 1) {
+    return false;
   }
 
   if (lastBotMessageAlreadyAskedQuestion(contactId)) {
