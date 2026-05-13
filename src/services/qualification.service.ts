@@ -15,6 +15,8 @@ import { buildScenarioReasoningReply } from "./scenario-reasoning.service";
 import { buildNegotiationReply } from "./negotiation-rules.service";
 import { buildBookingClosingReply } from "./booking-closing.service";
 import { buildKnowledgeAnswer } from "./knowledge-answer.service";
+import { buildHotLeadEstimateReply } from "./hot-lead-estimate.service";
+import { buildMessageFamilyAnswer } from "./message-family-answer.service";
 import {
   ensureLead,
   getLeadByContactId,
@@ -52,12 +54,15 @@ function looksLikeTimelineAnswer(text?: string): boolean {
     value.includes("esta semana") ||
     value.includes("este fin de semana") ||
     value.includes("la proxima semana") ||
+    value.includes("la próxima semana") ||
     value.includes("pronto") ||
     value.includes("asap") ||
     value.includes("this week") ||
     value.includes("tomorrow") ||
     value.includes("today") ||
-    value.includes("next week")
+    value.includes("next week") ||
+    value.includes("weekend") ||
+    value.includes("fin de semana")
   );
 }
 
@@ -298,6 +303,20 @@ export function buildQualifiedReply(contactId: string, incomingText?: string): s
     return bookingDecision.reply;
   }
 
+  const hotLeadDecision = buildHotLeadEstimateReply(
+    incomingText,
+    lead,
+    conversationLanguage
+  );
+
+  if (hotLeadDecision.reply) {
+    if (hotLeadDecision.shouldHandoff) {
+      updateLeadHandoffStatus(contactId, true, hotLeadDecision.reason);
+    }
+
+    return hotLeadDecision.reply;
+  }
+
   const knowledgeDecision = buildKnowledgeAnswer(
     contactId,
     incomingText,
@@ -306,6 +325,15 @@ export function buildQualifiedReply(contactId: string, incomingText?: string): s
 
   if (knowledgeDecision.reply) {
     return knowledgeDecision.reply;
+  }
+
+  const familyDecision = buildMessageFamilyAnswer(
+    incomingText,
+    conversationLanguage
+  );
+
+  if (familyDecision.reply) {
+    return familyDecision.reply;
   }
 
   const handoffDecision = decideHandoff(incomingText, lead);
